@@ -24,7 +24,10 @@ export default (sequelize, DataTypes) => {
                 msg: 'Please enter a gender'
             },
             validate: {
-                isIn: [['M', 'F']],
+                isIn: {
+                    args: [['M', 'F']],
+                    msg: "Only either M or F is allowed in gender",
+                },
             },
         }
     }, {});
