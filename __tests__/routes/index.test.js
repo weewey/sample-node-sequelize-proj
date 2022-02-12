@@ -2,6 +2,7 @@ import UserService from "../../src/services/user_service";
 import request from "supertest"
 import app from "../../src/app";
 import {StatusCodes} from "http-status-codes";
+import PieService from "../../src/services/pie_service";
 
 describe("Routes", () => {
     describe("GET /chart", () => {
@@ -83,6 +84,17 @@ describe("Routes", () => {
                 const result = await request(app).post("/chart").send(userAttrs);
                 expect(result.status).toEqual(StatusCodes.BAD_REQUEST)
             })
+        });
+    });
+
+    describe('GET /pie', () => {
+        it('should return the expected value', async () => {
+            jest.spyOn(PieService, "getGenderRatio").mockResolvedValue([
+                {label: "M", count: "1", gender: "M"}])
+            const result = await request(app).get("/pie")
+            expect(result.body).toEqual(
+                {data: [{label: "M", count: "1", gender: "M"}]}
+            )
         });
     });
 })

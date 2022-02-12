@@ -9,7 +9,7 @@ describe("UserService", () => {
         expect(spy).toBeCalled()
     })
 
-    describe('#CREATE', () => {
+    describe('#create', () => {
         it("should call UserRepository.create", async () => {
             const userAttrs = {name: "Test", age: 10, gender: "A"}
             const spy = jest.spyOn(UserRepository,

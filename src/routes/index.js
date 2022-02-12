@@ -5,6 +5,7 @@ import {StatusCodes} from "http-status-codes";
 import {validationResult} from "express-validator";
 import {createChartRules} from "../validation-rules/create_chart_rules";
 import validateRequest from "./validation_middleware";
+import PieService from "../services/pie_service";
 
 export const router = Router()
 
@@ -28,6 +29,12 @@ router.post("/chart",
         const {name, gender, age} = req.body;
         const user = await UserService.create({name, gender, age})
         res.status(StatusCodes.CREATED).json(user)
+    }))
+
+router.get("/pie",
+    asyncHandler(async (req, res) => {
+        const genderRatio = await PieService.getGenderRatio()
+        res.json({data: genderRatio})
     }))
 
 export default router
