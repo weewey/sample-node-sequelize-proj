@@ -13,7 +13,7 @@ describe("UserRepository", () => {
             expect(spy).toBeCalled()
         })
 
-        describe('CREATE', () => {
+        describe('create', () => {
             it('should create user with the expected attributes', async () => {
                 const userAttrs = {name: "Test", age: 10, gender: "M"}
                 const spy = jest.spyOn(User, "create").mockResolvedValue();
@@ -43,5 +43,18 @@ describe("UserRepository", () => {
                 });
             });
         });
+
+        describe("#groupAndCountByGender", () => {
+            it('should call User.findAll with the expected params', async () => {
+                const spy = jest.spyOn(User, "findAll").mockResolvedValue([]);
+                await UserRepository.groupAndCountByGender()
+                expect(spy).toBeCalledWith({
+                    "attributes": ["gender", [{
+                        "args": [{"col": "gender"}],
+                        "fn": "COUNT"
+                    }, "count"]], "group": ["gender"]
+                })
+            });
+        })
     }
 )

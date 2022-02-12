@@ -1,7 +1,7 @@
 import {User} from '../models';
 import {mapSequelizeErrorToErrorMessage} from "../utils/error-helpers";
 import BusinessError from "../errors/business_error";
-import {ValidationError} from "sequelize";
+import Sequelize, {ValidationError} from "sequelize";
 import TechnicalError from "../errors/technical_error";
 
 class UserRepository {
@@ -22,6 +22,13 @@ class UserRepository {
             throw new TechnicalError(e.message)
         }
         return user;
+    }
+
+    static async groupAndCountByGender(){
+        return await User.findAll({
+            group: ['gender'],
+            attributes: ['gender', [Sequelize.fn('COUNT', Sequelize.col('gender')), "count"]],
+        })
     }
 }
 
