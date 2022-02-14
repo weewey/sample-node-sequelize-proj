@@ -3,6 +3,7 @@ import request from "supertest"
 import app from "../../src/app";
 import {StatusCodes} from "http-status-codes";
 import PieService from "../../src/services/pie_service";
+import BarService from "../../src/services/bar_service";
 
 describe("Routes", () => {
     describe("GET /chart", () => {
@@ -90,10 +91,21 @@ describe("Routes", () => {
     describe('GET /pie', () => {
         it('should return the expected value', async () => {
             jest.spyOn(PieService, "getGenderRatio").mockResolvedValue([
-                {label: "M", count: "1", gender: "M"}])
+                {label: "M", count: 1, gender: "M"}])
             const result = await request(app).get("/pie")
             expect(result.body).toEqual(
-                {data: [{label: "M", count: "1", gender: "M"}]}
+                {data: [{label: "M", count: 1, gender: "M"}]}
+            )
+        });
+    });
+
+    describe('GET /bar', () => {
+        it('should return the expected', async () => {
+            jest.spyOn(BarService, "getAgeGroupStats").mockResolvedValue([
+                {label: "Young Adults", count: 1}])
+            const result = await request(app).get("/bar")
+            expect(result.body).toEqual(
+                {data: [{label: "Young Adults", count: 1}]}
             )
         });
     });

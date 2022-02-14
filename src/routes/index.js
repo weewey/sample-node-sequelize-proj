@@ -6,6 +6,7 @@ import {validationResult} from "express-validator";
 import {createChartRules} from "../validation-rules/create_chart_rules";
 import validateRequest from "./validation_middleware";
 import PieService from "../services/pie_service";
+import BarService from "../services/bar_service";
 
 export const router = Router()
 
@@ -35,6 +36,12 @@ router.get("/pie",
     asyncHandler(async (req, res) => {
         const genderRatio = await PieService.getGenderRatio()
         res.json({data: genderRatio})
+    }))
+
+router.get("/bar",
+    asyncHandler(async (req, res) => {
+        const ageGroupStats = await BarService.getAgeGroupStats()
+        res.json({data: ageGroupStats})
     }))
 
 export default router
