@@ -11,10 +11,10 @@ class UserRepository {
         return User.findAll()
     }
 
+    // async, await
     static async create(userAttributes) {
-        let user;
         try {
-            user = await User.create(userAttributes)
+            return await User.create(userAttributes)
         } catch (e) {
             if (e instanceof ValidationError) {
                 const errorMessage = mapSequelizeErrorToErrorMessage(e)
@@ -22,8 +22,20 @@ class UserRepository {
             }
             throw new TechnicalError(e.message)
         }
-        return user;
     }
+
+    //then, catch
+    // static create(userAttributes) {
+    //     return User.create(userAttributes)
+    //         .then((createdUser) => createdUser)
+    //         .catch((e) => {
+    //             if (e instanceof ValidationError) {
+    //                 const errorMessage = mapSequelizeErrorToErrorMessage(e)
+    //                 throw new BusinessError(errorMessage)
+    //             }
+    //             throw new TechnicalError(e.message)
+    //         })
+    // }
 
     static async groupAndCountByGender() {
         return await User.findAll({
