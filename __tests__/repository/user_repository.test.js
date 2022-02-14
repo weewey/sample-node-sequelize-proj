@@ -1,5 +1,5 @@
 import UserRepository from "../../src/repository/user_repository";
-import {User} from "../../src/models"
+import {sequelize, User} from "../../src/models"
 import {ValidationError, ValidationErrorItem} from "sequelize";
 import BusinessError from "../../src/errors/business_error";
 import TechnicalError from "../../src/errors/technical_error";
@@ -56,5 +56,25 @@ describe("UserRepository", () => {
                 })
             });
         })
+
+        describe('groupAndCountByAgeGroup', () => {
+            it('should return the expected', async () => {
+                const spy = jest.spyOn(sequelize, "query").mockResolvedValue([{
+                    "Age Range": "Adults",
+                    "Count": 2
+                }, {"Age Range": "Seniors", "Count": 1}, {"Age Range": "Young Adults", "Count": 6}])
+                await UserRepository.groupAndCountByAgeGroup()
+                const expectedQuery = `
+            select t.ageRange as [Age Range], count(*) as [Count]
+            from (
+                select case
+                when age between 0 and 35 then 'Young Adults'
+                when age between 36 and 50 then 'Adults'
+                else 'Seniors' end as ageRange
+                from Users) t
+            group by t.ageRange`
+                expect(spy).toBeCalledWith(expectedQuery, {type: "SELECT"})
+            });
+        });
     }
 )
