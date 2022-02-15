@@ -11,10 +11,12 @@ describe('PieService', () => {
 
     it('should return the expected', async () => {
         jest.spyOn(UserRepository, "groupAndCountByGender")
-            .mockResolvedValue([{count: 2, gender: "M"}])
+            .mockResolvedValue([
+                {dataValues: {count: 2, gender: "M"}},
+            ])
         const genderRatio = await PieService.getGenderRatio()
         expect(genderRatio).toEqual(
-            [{"label": "M", "count": 2, "gender": "M"}]
+            [{"label": "M", "data": 2}]
         )
     });
 
