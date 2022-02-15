@@ -30,7 +30,7 @@ describe("Routes", () => {
             }
             jest.spyOn(UserService, "create").mockResolvedValue({id: 1, ...userAttrs})
             const result = await request(app).post("/chart").send(userAttrs);
-            expect(result.body).toEqual({id: 1, ...userAttrs})
+            expect(result.body).toEqual({data: {id: 1, ...userAttrs}})
         })
 
         it('should return StatusCode 201', async () => {
