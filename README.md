@@ -1,10 +1,23 @@
-Steps
+## Steps to start up the service
+1. npm install
+2. npx sequelize db:migrate
+3. npm start
+   
 
-1. npm init - y
-2. npm install --save sequelize sequelize-cli sqlite3 babel-cli babel-core
-3. npm install --save-dev babel-preset-env
-4. npx sequelize init
-5. npx sequelize model:create --name User --attributes name:string,age:integer,gender:string
+## To create a model
+This will:
+- Create a model file user in models folder;
+- Create a migration file with name like XXXXXXXXXXXXXX-create-user.js in migrations folder.
+
+```
+npx sequelize model:create --name User --attributes name:string,age:integer,gender:string
+```
+
+## To generate a seed file
+```
+sequelize seed:generate --name users
+```
+
 
 
 
