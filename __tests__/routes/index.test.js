@@ -4,6 +4,7 @@ import app from "../../src/app";
 import {StatusCodes} from "http-status-codes";
 import PieService from "../../src/services/pie_service";
 import BarService from "../../src/services/bar_service";
+import BarController from "../../src/controllers/bar_controller";
 
 describe("Routes", () => {
     describe("GET /chart", () => {
