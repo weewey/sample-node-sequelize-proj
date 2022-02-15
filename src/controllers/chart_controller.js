@@ -5,7 +5,7 @@ import {StatusCodes} from "http-status-codes";
 class ChartController {
     static async getChart(req,res) {
         const users = await UserService.getUsers()
-        res.json(users)
+        res.json({data: users})
     }
 
     static async createChartRow(req, res) {
@@ -16,7 +16,7 @@ class ChartController {
 
         const {name, gender, age} = req.body;
         const user = await UserService.create({name, gender, age})
-        res.status(StatusCodes.CREATED).json(user)
+        res.status(StatusCodes.CREATED).json({data: user})
     }
 }
 

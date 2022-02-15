@@ -4,7 +4,6 @@ import app from "../../src/app";
 import {StatusCodes} from "http-status-codes";
 import PieService from "../../src/services/pie_service";
 import BarService from "../../src/services/bar_service";
-import BarController from "../../src/controllers/bar_controller";
 
 describe("Routes", () => {
     describe("GET /chart", () => {
@@ -17,8 +16,8 @@ describe("Routes", () => {
             }
             jest.spyOn(UserService, "getUsers").mockResolvedValue([user]);
             const result = await request(app).get("/chart")
-            expect(result.body.length).toEqual(1)
-            expect(result.body[0]).toEqual(expect.objectContaining(user))
+            expect(result.body.data.length).toEqual(1)
+            expect(result.body.data[0]).toEqual(expect.objectContaining(user))
         })
     })
 
